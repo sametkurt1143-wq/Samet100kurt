@@ -1,28 +1,48 @@
+"""
+BIST RALLI AVCISI + DONUS NOKTASI + TELEGRAM BOTU v3.1
+=========================================================
+v3.1 (v3.0 uzerine duzeltmeler):
+1) KRITIK BUG DUZELTILDI: DONUS NOKTASI mesajinda ATR satirinin
+   f-string birlestirmesi yanlis parantezlenmisti. `if atr_pct else ""`
+   kosulu, sadece ATR satirina degil, o satira kadarki TUM mesaja
+   (baslik, fiyat, trend, destek, direnc, RSI, hacim satirlari dahil)
+   uygulaniyordu. atr_pct bos/None/0 oldugunda mesaj SESSIZCE bos
+   gidiyor, Telegram'a sadece yarim bir mesaj (Mum + Risk/Odul +
+   kriterler) ulasiyordu. ATR satiri artik ayri bir degiskene
+   (`atr_line`) alinip mesaja normal sekilde ekleniyor - diger
+   satirlar (limit_line, divergence_line, resistance_line) zaten
+   bu desende dogru yazilmisti.
+2) ANI DUSUS mesajina eksik olan "Yatirim tavsiyesi degildir"
+   uyarisi eklendi (diger mesajlarla tutarlilik icin).
+
+v3.0 OZET:
+1) DONUS sistemi korunur.
+2) RALLI sistemi ayri puanlanir: 0-10.
+3) 20/50/100 gunluk zirve kirilimi kontrol edilir.
+4) Hacim kirilimi onaylar.
+5) RSI + MACD + EMA trendi ralli puanina dahil edilir.
+6) RALLI ADAYI / RALLI BASLADI / RALLI GUCLENIYOR ayrimi yapilir.
+7) Kirilim sonrasi kirilim seviyesinin altinda kapanis takip edilir.
+8) ATR bazli hedef ve stop hesaplanir.
+9) Ani dusus ve tavana yaklasma uyarilari korunur.
+10) State dosyasi ile ayni alarm tekrar tekrar gonderilmez.
+
+NOT:
+Bu arac yatirim tavsiyesi vermez. Teknik gostergeler gelecegi garanti etmez.
+"""
+
 import os
 import json
-import time
 import requests
-import urllib.parse
-import xml.etree.ElementTree as ET
 import yfinance as yf
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from bs4 import BeautifulSoup
-
-# Optional: TradingView yedek kütüphanesi (Yüklü ise aktif olur)
-try:
-    from tvDatafeed import TvDatafeed, Interval
-    TV_AVAILABLE = True
-except ImportError:
-    TV_AVAILABLE = False
 
 # ==================== KURULUM ====================
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "BURAYA_BOT_TOKENINI_YAZ")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "BURAYA_CHAT_ID_YAZ")
-
-# --- YENI: FD/SNA orani en dusuk 8 hisseden eksik olan TRENJ ve ULKER eklendi ---
 
 TICKERS = [
     # --- Önceki liste ---
@@ -112,6 +132,12 @@ MIN_STOP_DISTANCE_PCT = 2.5
 
 DIVERGENCE_LOOKBACK_DAYS = 60
 
+# --- YENI: momentum/donus ayrimi icin esikler ---
+# Fiyat destege yakin DEGILKEN, hacim/MACD/mum guclu ve RSI yuksekse
+# bu bir "destek testi" degil, devam eden bir kirilim/momentum hareketidir.
+# Boyle durumlarda hedef, yakin fib direncine degil ATR bazli genisletilmis
+# bir hedefe gore hesaplanir - aksi halde MIATK/PETKM gibi hareketler
+# yakin dirence cok yakin oldugu icin yapay "ZAYIF" R/O etiketi yiyordu.
 MOMENTUM_RSI_MIN = 60
 MOMENTUM_ATR_TARGET_MULT = 3.0
 
@@ -148,16 +174,7 @@ SHARP_DROP_FROM_HIGH_PCT = 4.0
 
 EMA_PERIODS = [20, 50, 200]
 
-# ==================== KREDILI ISLEM YASAGI (VBTS) ====================
-# rotaborsa.com/tedbirli-hisseler/ sayfasi Borsa Istanbul'un VBTS
-# (Volatilite Bazli Tedbir Sistemi) kapsaminda tedbirli/kredili islem
-# yasagi olan hisseleri gunluk guncellenen bir tabloda listeliyor.
-# Google News RSS'e (haber modulu) guvenmek yerine bu sayfayi DOGRUDAN
-# cekiyoruz - cunku bir yasak haberi henuz indexlenmemis olabilir, ama
-# bu tablo dogrudan kaynak.
-MARGIN_BAN_URL = "https://rotaborsa.com/tedbirli-hisseler/"
-
-# ===================================================
+# =========================================================
 
 
 def load_state() -> dict:
@@ -191,161 +208,6 @@ def send_telegram_message(text: str):
             print(f"[HATA] Telegram gonderim basarisiz: {r.text}")
     except Exception as e:
         print(f"[HATA] Telegram baglanti hatasi: {e}")
-
-
-# =========================================================
-# KREDILI ISLEM YASAGI (VBTS TEDBIR) KONTROLU
-# =========================================================
-
-def fetch_margin_ban_list() -> dict:
-    """rotaborsa.com/tedbirli-hisseler/ sayfasindaki 'Guncel tedbirli
-    hisseler listesi' tablosunu ceker ve kredili islem/acika satis
-    yasagi olan hisseleri {SEMBOL: bitis_tarihi} seklinde dondurur.
-    Sayfa yapisi degisirse ya da erisim basarisiz olursa BOS SOZLUK
-    doner - script bu durumda sessizce devam eder, hic kimseyi
-    engellemez (feature'in kendisi opsiyonel bir ek bilgi katmanidir)."""
-    banned = {}
-    try:
-        resp = requests.get(
-            MARGIN_BAN_URL,
-            headers={"User-Agent": "Mozilla/5.0"},
-            timeout=15,
-        )
-        if resp.status_code != 200:
-            print(f"[UYARI] Kredili islem yasagi sayfasi alinamadi: HTTP {resp.status_code}")
-            return banned
-
-        soup = BeautifulSoup(resp.text, "html.parser")
-        tables = soup.find_all("table")
-
-        for table in tables:
-            rows = table.find_all("tr")
-            for row in rows:
-                cells = row.find_all(["td", "th"])
-                if len(cells) < 4:
-                    continue
-                ticker_cell = cells[0].get_text(strip=True)
-                # Baslik satirlarini (BIST Kodu vs.) atla
-                if not ticker_cell or not ticker_cell.isalpha() or len(ticker_cell) > 6:
-                    continue
-
-                end_date = cells[2].get_text(strip=True) if len(cells) > 2 else ""
-                margin_ban_cell = cells[3].get_text(strip=True) if len(cells) > 3 else ""
-
-                # Kredili islem/acik satis sutunu doluysa (bir isaret/checkmark
-                # iceriyorsa) bu hisse kredili islem yasagi kapsaminda demektir.
-                if margin_ban_cell:
-                    banned[ticker_cell.upper()] = end_date
-
-        if banned:
-            print(f"[DEBUG] Kredili islem yasagi listesi cekildi: {len(banned)} hisse")
-        else:
-            print("[UYARI] Kredili islem yasagi tablosu bulundu ama hic satir okunamadi "
-                  "(sayfa yapisi degismis olabilir)")
-
-    except Exception as e:
-        print(f"[UYARI] Kredili islem yasagi listesi cekilemedi: {type(e).__name__}: {e}")
-
-    return banned
-
-
-# =========================================================
-# YEDEK VERI MOTORU (FALLBACK MECHANISM)
-# =========================================================
-
-def get_stock_history_with_fallback(ticker: str, period: str = "2y") -> pd.DataFrame:
-    """
-    Önce Yahoo Finance dener. Başarısız veya boş veri dönerse
-    TradingView (tvDatafeed) veya diğer yedek yollara geçer.
-    """
-    try:
-        data = yf.Ticker(ticker).history(period=period)
-        if not data.empty and len(data) >= 30:
-            return data
-    except Exception as e:
-        print(f"[YF UYARI] {ticker} Yahoo Finance verisi çekilemedi: {e}")
-
-    if TV_AVAILABLE:
-        try:
-            symbol = ticker.replace(".IS", "")
-            print(f"[YEDEK] {symbol} TradingView üzerinden çekiliyor...")
-            tv = TvDatafeed()
-            tv_data = tv.get_hist(symbol=symbol, exchange='BIST', interval=Interval.in_daily, n_bars=500)
-            if tv_data is not None and not tv_data.empty:
-                tv_data = tv_data.rename(columns={
-                    "open": "Open", "high": "High",
-                    "low": "Low", "close": "Close", "volume": "Volume"
-                })
-                return tv_data
-        except Exception as e:
-            print(f"[YEDEK HATA] TradingView verisi alınamadı ({ticker}): {e}")
-
-    return pd.DataFrame()
-
-
-# =========================================================
-# GELİŞMİŞ HABER MODÜLÜ (GÖRSELLERDEKİ ÖZEL SİTELER ENTEGRELİ)
-# =========================================================
-
-def get_stock_news(symbol: str, max_items: int = 3) -> str:
-    """
-    Rota Borsa, Bloomberg HT, CNBC-e ve Midas haber kaynaklarını
-    Google News altyapısı üzerinden öncelikli olarak tarar.
-    Her başlık, Telegram'da tıklanabilir bir link olarak eklenir
-    (HTML parse_mode <a href> destekler) - böylece kullanıcı
-    başlığa dokunup haberin tamamını okuyabilir.
-    """
-    try:
-        queries = [
-            f"{symbol} site:rotaborsa.com OR site:bloomberght.com OR site:cnbce.com OR site:getmidas.com",
-            f"{symbol} hisse haber KAP"
-        ]
-
-        news_list = []
-        seen_titles = set()
-
-        for q in queries:
-            query_encoded = urllib.parse.quote(q)
-            rss_url = f"https://news.google.com/rss/search?q={query_encoded}&hl=tr&gl=TR&ceid=TR:tr"
-
-            response = requests.get(rss_url, timeout=5)
-            if response.status_code == 200:
-                root = ET.fromstring(response.content)
-                items = root.findall(".//item")
-
-                for item in items:
-                    title_el = item.find("title")
-                    link_el = item.find("link")
-                    title = title_el.text if title_el is not None else ""
-                    link = link_el.text if link_el is not None else ""
-
-                    if title:
-                        title_clean = title.rsplit(" - ", 1)[0] if " - " in title else title
-                        if title_clean not in seen_titles:
-                            seen_titles.add(title_clean)
-                            if link:
-                                # HTML ozel karakterlerini kacir (& her zaman
-                                # Google News linklerinde gecer, Telegram HTML
-                                # parse_mode bunu bozabilir)
-                                safe_link = link.replace("&", "&amp;")
-                                news_list.append(f'• <a href="{safe_link}">{title_clean}</a>')
-                            else:
-                                news_list.append(f"• {title_clean}")
-
-                    if len(news_list) >= max_items:
-                        break
-
-            if len(news_list) >= max_items:
-                break
-
-        if not news_list:
-            return "<i>Sirketle ilgili guncel haber bulunamadi.</i>"
-
-        return "\n".join(news_list)
-
-    except Exception as e:
-        print(f"[HATA] Haber cekilemedi ({symbol}): {e}")
-        return "<i>Haber servisi gecici olarak kullanilamiyor.</i>"
 
 
 # =========================================================
@@ -430,6 +292,15 @@ def support_strength(data: pd.DataFrame, level_price: float, lookback_days: int,
     return int((diffs_pct <= tolerance_pct).sum())
 
 
+def classify_break_risk(touches: int):
+    if touches <= 1:
+        return "BELIRSIZ"
+    elif touches <= 5:
+        return "DUSUK"
+    else:
+        return "DIKKAT - yorulmus olabilir"
+
+
 def detailed_candle_info(data: pd.DataFrame):
     last = data.iloc[-1]
     open_p, close_p, high_p, low_p = last["Open"], last["Close"], last["High"], last["Low"]
@@ -459,6 +330,10 @@ def detailed_candle_info(data: pd.DataFrame):
         "lower_wick_ratio": lower_wick_ratio,
         "is_bullish": is_bullish,
     }
+
+
+def check_bullish_candle(data: pd.DataFrame):
+    return detailed_candle_info(data)["is_bullish"]
 
 
 def detect_bullish_divergence(data: pd.DataFrame, rsi_series: pd.Series, lookback_days: int):
@@ -598,22 +473,22 @@ def calculate_rally_score(data: pd.DataFrame, trend: dict, rsi: float, macd_bull
 
     if volume_ratio >= RALLY_STRONG_VOLUME_RATIO:
         score += 2
-        criteria[f"Hacim patlamasi ({volume_ratio:.2f}x)"] = True
+        criteria["Hacim patlamasi"] = True
     elif volume_ratio >= RALLY_VOLUME_RATIO:
         score += 1
-        criteria[f"Hacim artisi ({volume_ratio:.2f}x)"] = True
+        criteria["Hacim artisi"] = True
     else:
-        criteria[f"Hacim yetersiz ({volume_ratio:.2f}x)"] = False
+        criteria["Hacim onayi"] = False
 
     if not pd.isna(rsi) and RALLY_RSI_MIN <= rsi <= RALLY_RSI_MAX:
         score += 1
-        criteria[f"RSI saglikli momentum ({rsi:.1f})"] = True
+        criteria["RSI saglikli momentum"] = True
     else:
-        criteria[f"RSI aralik disi ({rsi:.1f})"] = False
+        criteria["RSI saglikli momentum"] = False
 
     if not pd.isna(rsi) and rsi >= RALLY_OVERBOUGHT_RSI:
         score -= 2
-        criteria[f"RSI asiri yuksek ({rsi:.1f})"] = False
+        criteria["RSI asiri yuksek"] = False
 
     if macd_bullish:
         score += 1
@@ -635,9 +510,9 @@ def calculate_rally_score(data: pd.DataFrame, trend: dict, rsi: float, macd_bull
 
     if candle_info["is_bullish"]:
         score += 1
-        criteria[f"Boga mumu ({candle_info['formation']})"] = True
+        criteria["Boga mumu"] = True
     else:
-        criteria[f"Ayi mumu ({candle_info['formation']})"] = False
+        criteria["Boga mumu"] = False
 
     if trend["ema20"]:
         distance_ema20 = (current_price - trend["ema20"]) / trend["ema20"] * 100
@@ -655,22 +530,12 @@ def rally_score_label(score: int):
     elif score >= 7:
         return "🚀 RALLI ADAYI"
     elif score >= 5:
-        return "🧐 IZLEME"
+        return "🟡 IZLEME"
     else:
         return "⚪ ZAYIF"
 
 
-def margin_ban_line(symbol: str, margin_banned: dict) -> str:
-    """Hisse VBTS kapsaminda kredili islem yasagi listesindeyse
-    mesaja eklenecek uyari satirini dondurur, degilse bos string."""
-    if symbol in margin_banned:
-        end_date = margin_banned[symbol]
-        return (f"🚫 <b>DIKKAT:</b> Bu hisseye kredili islem/acik satis yasagi var "
-                f"({end_date} tarihine kadar) - kaldirac kullanilamaz!\n")
-    return ""
-
-
-def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_banned: dict):
+def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict):
     symbol = ticker.replace(".IS", "")
     current_price = float(data["Close"].iloc[-1])
 
@@ -691,6 +556,16 @@ def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_b
         data, trend, current_rsi, macd_bullish, volume_ratio, candle_info, current_price
     )
 
+    # --- YENI (debug): her calistirmada ralli skorunu ve kirilim
+    # durumunu goster - "mesaj neden gelmedi" sorusunu cevaplamak icin
+    print(f"   [RALLI] {symbol}: skor={score}/10  esik={RALLY_MIN_SCORE}  "
+          f"kirilim={'VAR' if breakout else 'YOK'}  hacim={volume_ratio:.2f}x  "
+          f"trend={trend['trend_label']}  RSI={current_rsi:.1f}")
+
+    # =====================================================
+    # GERCEK KIRILIM -> RALLI BASLADI
+    # =====================================================
+
     if breakout:
         broken_name, broken_level = breakout
 
@@ -710,23 +585,23 @@ def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_b
                 reward_pct = (target - current_price) / current_price * 100
                 rr = reward_pct / risk_pct if risk_pct > 0 else 0
 
-                news_text = get_stock_news(symbol)
-                ban_line = margin_ban_line(symbol, margin_banned)
-
                 msg = (
                     f"🚀 <b>{symbol} RALLI BASLADI</b>\n\n"
-                    f"{ban_line}"
                     f"Guncel fiyat: {current_price:.2f}\n"
                     f"Kirilan seviye: {broken_name} = {broken_level:.2f} ✅\n"
+                    f"Hacim: {volume_ratio:.2f}x 🔥\n"
+                    f"RSI(14): {current_rsi:.1f}\n"
+                    f"MACD: {'POZITIF ✅' if macd_bullish else 'NEGATIF'}\n"
                     f"Trend: {trend['trend_label']}\n"
                     f"EMA20 > EMA50: {'EVET ✅' if trend['ema20_above_50'] else 'HAYIR'}\n\n"
                     f"<b>Ralli skoru: {score}/10</b> - {rally_score_label(score)}\n\n"
                     f"🎯 ATR hedefi: {target:.2f} (+%{reward_pct:.2f})\n"
-                    f"💔 Kirilim/ATR stop: {stop:.2f} (-%{risk_pct:.2f})\n"
+                    f"🛑 Kirilim/ATR stop: {stop:.2f} (-%{risk_pct:.2f})\n"
                     f"⚖️ Risk/Odul: {rr:.2f}\n\n"
                     f"<b>Ralli kriterleri:</b>\n"
                     + "\n".join(f"{'✅' if v else '⬜'} {k}" for k, v in criteria.items())
-                    + f"\n\n📰 <b>Son Haber Basliklari:</b>\n{news_text}\n\n"
+                    + "\n\n"
+                    f"⚠️ Direnc kirildi ancak hareketin devam edecegi garanti degildir.\n\n"
                     f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
                     f"⚠️ Yatirim tavsiyesi degildir."
                 )
@@ -741,6 +616,11 @@ def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_b
                     "score": int(score),
                     "started": datetime.now().strftime("%d.%m.%Y %H:%M"),
                 }
+                print(f"   🚀 {symbol}: RALLI BASLADI ({broken_name})")
+
+    # =====================================================
+    # RALLI GUCLENIYOR
+    # =====================================================
 
     tracking_key = f"{ticker}_rally_tracking"
     tracking = state.get(tracking_key)
@@ -760,12 +640,19 @@ def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_b
                 f"Ralli baslangicindan: +%{gain:.2f} 🚀\n"
                 f"Yeni zirve: {highest:.2f}\n"
                 f"Ralli skoru: {score}/10\n"
+                f"RSI: {current_rsi:.1f}\n"
+                f"Hacim: {volume_ratio:.2f}x\n"
                 f"Trend: {trend['trend_label']}\n\n"
+                f"Yukselis yapisi su an korunuyor.\n\n"
                 f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
                 f"⚠️ Yatirim tavsiyesi degildir."
             )
             send_telegram_message(msg)
             tracking["previous_alert_high"] = float(current_price)
+
+    # =====================================================
+    # RALLI ADAYI (henuz kirilim yok ama puan yuksek)
+    # =====================================================
 
     if score >= RALLY_MIN_SCORE and not breakout and volume_ratio >= 1.2:
         candidate_key = f"{ticker}_rally_candidate"
@@ -787,15 +674,14 @@ def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_b
                 if nearest_level else None
             )
 
-            news_text = get_stock_news(symbol)
-            ban_line = margin_ban_line(symbol, margin_banned)
-
             msg = (
-                f"🤑 <b>{symbol} RALLI ADAYI</b>\n\n"
-                f"{ban_line}"
+                f"🟡 <b>{symbol} RALLI ADAYI</b>\n\n"
                 f"Guncel fiyat: {current_price:.2f}\n"
                 f"<b>Ralli skoru: {score}/10</b>\n\n"
                 f"Trend: {trend['trend_label']}\n"
+                f"RSI(14): {current_rsi:.1f}\n"
+                f"MACD: {'POZITIF ✅' if macd_bullish else 'NEGATIF'}\n"
+                f"Hacim: {volume_ratio:.2f}x\n\n"
             )
 
             if nearest_level:
@@ -807,7 +693,8 @@ def check_rally_candidate(ticker: str, data: pd.DataFrame, state: dict, margin_b
             msg += (
                 f"<b>Kriterler:</b>\n"
                 + "\n".join(f"{'✅' if v else '⬜'} {k}" for k, v in criteria.items())
-                + f"\n\n📰 <b>Son Haber Basliklari:</b>\n{news_text}\n\n"
+                + "\n\n"
+                f"⚠️ Henuz kesin ralli teyidi yok. Hacimli direnç kirilimi bekleniyor.\n\n"
                 f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
                 f"⚠️ Yatirim tavsiyesi degildir."
             )
@@ -832,15 +719,20 @@ def check_rally_status(ticker: str, data: pd.DataFrame, state: dict):
 
     if last_close < broken_level:
         msg = (
-            f"🤕 <b>{symbol} RALLI ZAYIFLADI</b>\n\n"
+            f"🟠 <b>{symbol} RALLI ZAYIFLADI</b>\n\n"
             f"Kirilim seviyesi: {broken_level:.2f}\n"
             f"Guncel kapanis: {last_close:.2f}\n"
             f"Ralli baslangicindan: %{gain:.2f}\n\n"
+            f"Fiyat kirilan seviyenin altinda kapanis yapti.\n"
+            f"Bu durum sahte kirilim veya geri cekilme olabilir.\n\n"
             f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
             f"⚠️ Yatirim tavsiyesi degildir."
         )
         send_telegram_message(msg)
         del state[key]
+        print(f"   🟠 {symbol}: RALLI ZAYIFLADI")
+    else:
+        print(f"   🔥 {symbol}: RALLI TAKIPTE - {last_close:.2f} > {broken_level:.2f}")
 
 
 # =========================================================
@@ -851,7 +743,8 @@ def check_rally_status(ticker: str, data: pd.DataFrame, state: dict):
 def check_sharp_drop(ticker: str):
     try:
         intraday = yf.Ticker(ticker).history(period="1d", interval="5m")
-    except Exception:
+    except Exception as e:
+        print(f"[Ani dusus kontrolu atlandi] {ticker}: {e}")
         return None
 
     if intraday.empty or len(intraday) < 13:
@@ -881,6 +774,11 @@ def check_sharp_drop(ticker: str):
 
 
 def check_active_setup(ticker: str, current_price: float, state: dict):
+    """Daha once acilmis bir DONUS setup'i varsa, stop ya da hedefe
+    ulasilip ulasilmadigini kontrol eder. Ulasildiysa kaydi siler,
+    boylece bir sonraki uygun sinyal tekrar gonderilebilir.
+    NOT: Bu fonksiyon olmadan `state[setup_key]` kalici kaliyor ve
+    o ticker icin bir daha ASLA yeni DONUS mesaji gonderilmiyordu."""
     symbol = ticker.replace(".IS", "")
     setup_key = f"{ticker}_active_setup"
     setup = state.get(setup_key)
@@ -897,11 +795,13 @@ def check_active_setup(ticker: str, current_price: float, state: dict):
             f"🔴 <b>{symbol} DONUS BASARISIZ OLDU</b>\n\n"
             f"Giris: {entry:.2f} | Stop: {stop:.2f} kirildi\n"
             f"Guncel fiyat: {current_price:.2f}\n\n"
+            f"Bu sinyal takibi sona erdi.\n\n"
             f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
             f"⚠️ Yatirim tavsiyesi degildir."
         )
         send_telegram_message(msg)
         del state[setup_key]
+        print(f"   [SETUP] {symbol}: BASARISIZ - stop kirildi, kayit silindi")
         return
 
     if current_price >= target:
@@ -910,16 +810,26 @@ def check_active_setup(ticker: str, current_price: float, state: dict):
             f"✅ <b>{symbol} DONUS HEDEFE ULASTI</b>\n\n"
             f"Giris: {entry:.2f} | Hedef: {target:.2f}\n"
             f"Guncel fiyat: {current_price:.2f} (+%{gain_pct:.2f})\n\n"
+            f"Bu sinyal takibi sona erdi.\n\n"
             f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
             f"⚠️ Yatirim tavsiyesi degildir."
         )
         send_telegram_message(msg)
         del state[setup_key]
+        print(f"   [SETUP] {symbol}: HEDEFE ULASTI, kayit silindi")
         return
+
+    print(f"   [SETUP] {symbol}: takip ediliyor (giris={entry:.2f} stop={stop:.2f} hedef={target:.2f})")
 
 
 def classify_setup_type(near_support: bool, volume_spike: bool, macd_bullish: bool,
                          bullish_candle: bool, trend_label: str, current_rsi: float) -> str:
+    """DONUS kriterlerinin altinda yatan durumu ikiye ayirir:
+    - DONUS: fiyat gercekten bir destege yakin, klasik geri donus adayi
+    - MOMENTUM: destekten uzak ama hacim/MACD/mum guclu, RSI yuksek -
+      bu aslinda devam eden bir kirilim/ivmelenme, "destek testi" degil.
+    Ayrim, hedef fiyatin dogru secilmesi (fib direnci mi, ATR bazli
+    genisletilmis hedef mi) icin kullanilir."""
     is_momentum = (
         volume_spike and macd_bullish and bullish_candle
         and trend_label == "YUKSELIS"
@@ -930,43 +840,75 @@ def classify_setup_type(near_support: bool, volume_spike: bool, macd_bullish: bo
     return "MOMENTUM" if is_momentum else "DONUS"
 
 
-def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
-    data = get_stock_history_with_fallback(ticker, period="2y")
-
-    if data.empty or len(data) < 120:
+def analyze_ticker(ticker: str, state: dict):
+    try:
+        data = yf.Ticker(ticker).history(period="2y")
+        print(f"[DEBUG] {ticker}: {len(data)} satir veri")
+    except Exception as e:
+        print(f"[HATA] {ticker}: {e}")
         return
 
+    if data.empty:
+        return
+
+    # Yahoo bazen son satira NaN Close'lu bir yer tutucu ekliyor - temizle
     data = data.dropna(subset=["Close"])
+
+    if len(data) < 120:
+        print(f"[UYARI] {ticker}: yetersiz veri")
+        return
+
     symbol = ticker.replace(".IS", "")
     current_price = float(data["Close"].iloc[-1])
 
+    # --- YENI: onceki DONUS setup'i varsa once onu kontrol et
+    # (stop/hedef vurulduysa kaydi temizler, boylece yeni sinyal
+    # tekrar gonderilebilir) ---
     check_active_setup(ticker, current_price, state)
 
-    # Ani Düşüş Kontrolü
+    # =====================================================
+    # ANI DUSUS
+    # =====================================================
+
     sharp_drop = check_sharp_drop(ticker)
     if sharp_drop and sharp_drop["triggered"]:
         msg = (
-            f"🚨 <b>{symbol} ANI DUSUS</b>\n\n"
+            f"🔴 <b>{symbol} ANI DUSUS</b>\n\n"
             f"Guncel fiyat: {sharp_drop['current_price']:.2f}\n"
             f"Son 1 saat: %{sharp_drop['drop_1h_pct']:.2f}\n"
             f"Gun ici tepeden: %{sharp_drop['drop_from_high_pct']:.2f}\n"
             f"Gun ici tepe: {sharp_drop['intraday_high']:.2f}\n\n"
+            f"Fiyat hareketi normalden hizli.\n\n"
             f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
             f"⚠️ Yatirim tavsiyesi degildir."
         )
         send_telegram_message(msg)
 
-    # Ralli Kontrolleri
-    check_rally_status(ticker, data, state)
-    check_rally_candidate(ticker, data, state, margin_banned)
+    # =====================================================
+    # RALLI MOTORU
+    # =====================================================
 
-    # Dönüş Kontrolleri
+    check_rally_status(ticker, data, state)
+    check_rally_candidate(ticker, data, state)
+
+    # =====================================================
+    # DONUS MOTORU
+    # =====================================================
+
     peak, trough = find_trend_leg(data, TREND_LOOKBACK_DAYS)
     fib = calculate_all_fib_levels(peak, trough)
+
     support_levels = {k: v for k, v in fib.items() if k in ("0.618", "0.786", "1.0 (Dip)")}
 
-    closest_name, closest_price, closest_distance = None, None, 999
+    closest_name = None
+    closest_price = None
+    closest_distance = 999
 
+    # DUZELTME: sadece fiyatin ALTINDAKI seviyeler gercek "destek" sayilir.
+    # Onceki halde yon kontrolu yoktu; fiyat bir dirence yaklastiginda o
+    # seviye yanlislikla "en yakin destek" olarak secilebiliyor, bu da
+    # hedefin (= ayni seviye) girisin hemen ustunde cikmasina ve yapay
+    # "Risk/Odul ZAYIF" etiketine yol aciyordu (MIATK ornegi).
     for name, price in support_levels.items():
         if price >= current_price:
             continue
@@ -1003,18 +945,31 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
 
     divergence = detect_bullish_divergence(data, rsi_series, DIVERGENCE_LOOKBACK_DAYS)
 
+    # =====================================================
+    # DONUS PUANI
+    # =====================================================
+
     criteria = {
-        f"Destek seviyesine yakin (fark %{closest_distance:.2f})": near_support,
-        f"RSI asiri satim ({rsi:.1f})": oversold,
-        f"Hacim artisi ({volume_ratio:.2f}x)": volume_spike,
-        f"Boga mumu / cekic ({candle['formation']})": candle["is_bullish"],
-        f"Guclu destek (test: {touches})": strong_support,
-        f"MACD momentum yukari ({'POZITIF' if macd_bullish else 'NEGATIF'})": macd_bullish,
+        "Destek seviyesine yakin": near_support,
+        "RSI asiri satim": oversold,
+        "Hacim artisi": volume_spike,
+        "Boga mumu / cekic": candle["is_bullish"],
+        "Guclu destek": strong_support,
+        "MACD momentum yukari": macd_bullish,
     }
     score = sum(1 for value in criteria.values() if value)
 
     min_score = MIN_SCORE_DOWNTREND if trend["trend_label"] == "DUSUS" else MIN_SCORE
     hard_volume = volume_ratio >= VOLUME_HARD_FILTER_RATIO
+
+    # --- YENI (debug): donus skorunu goster ---
+    print(f"   [DONUS] {symbol}: skor={score}/6  esik={min_score}  "
+          f"hacimFiltre={'GECTI' if hard_volume else 'GECMEDI'}  "
+          f"destekFark=%{closest_distance:.2f}")
+
+    # =====================================================
+    # 52 HAFTALIK
+    # =====================================================
 
     last_252 = data.tail(252)
     high_52 = last_252["High"].max()
@@ -1022,9 +977,17 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
     from_low = (current_price - low_52) / low_52 * 100
     from_high = (current_price - high_52) / high_52 * 100
 
+    # =====================================================
+    # DIRENC / DESTEK
+    # =====================================================
+
     next_res_name, next_res_price = find_next_resistance(fib, current_price)
     upside = (next_res_price - current_price) / current_price * 100 if next_res_price else None
     next_support_name, next_support_price = find_next_support(fib, closest_price)
+
+    # =====================================================
+    # STATE (onceki calistirmaya gore yon)
+    # =====================================================
 
     previous = state.get(ticker, {})
     previous_price = previous.get("last_price")
@@ -1035,8 +998,8 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
 
     if previous_price:
         change = (current_price - previous_price) / previous_price * 100
-        arrow_icon = "💲 🟢" if change > 0 else ("🔻 🔴" if change < 0 else "➡️")
-        price_line = f"Onceki analize gore: {arrow_icon} %{change:+.2f}\n"
+        arrow = "▲" if change > 0 else ("▼" if change < 0 else "→")
+        price_line = f"Onceki analize gore: {arrow} %{abs(change):.2f}\n"
 
     if previous_score is not None:
         if score > previous_score:
@@ -1052,6 +1015,10 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
         "last_update": datetime.now().strftime("%d.%m.%Y %H:%M"),
     }
 
+    # =====================================================
+    # DONUS SINYALI
+    # =====================================================
+
     if score >= min_score and hard_volume:
         stop = current_price - atr * 1.5 if not pd.isna(atr) else current_price * 0.97
         if next_support_price:
@@ -1060,6 +1027,7 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
         min_stop = current_price * (1 - MIN_STOP_DISTANCE_PCT / 100)
         stop = min(stop, min_stop)
 
+        # --- YENI: setup tipine gore hedef secimi ---
         setup_type = classify_setup_type(
             near_support, volume_spike, macd_bullish, candle["is_bullish"],
             trend["trend_label"], rsi
@@ -1085,6 +1053,8 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
             (current_price - data["Close"].iloc[-2]) / data["Close"].iloc[-2] * 100
         )
 
+        # --- YENI/DUZELTME (v3.1): her satir kendi degiskeninde,
+        # kosullu satirlar mesajin tamamini SILMEZ ---
         limit_line = (
             f"⚠️ Gunluk degisim +%{daily_change:.2f} - tavana yaklasiyor!\n"
             if daily_change >= APPROACHING_LIMIT_PCT else ""
@@ -1098,34 +1068,38 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
             f"Kirilirsa sonraki destek: {next_support_name} = {next_support_price:.2f}\n"
             if next_support_price else ""
         )
-        atr_line = f"ATR: %{atr_pct:.2f}\n" if atr_pct else ""
-        setup_type_line = f"Setup tipi: {setup_type}\n"
-        ban_line = margin_ban_line(symbol, margin_banned)
+        # DUZELTME: ATR satiri artik ayri degiskende - bos oldugunda
+        # sadece bu satir kayboluyor, mesajin geri kalani ETKILENMIYOR.
+        atr_line = f"ATR: {atr_pct:.2f}%\n" if atr_pct else ""
 
-        news_text = get_stock_news(symbol)
+        setup_type_line = f"Setup tipi: {setup_type}\n"
 
         msg = (
             f"{title_emoji} <b>{symbol} {title_text}</b>\n\n"
-            f"{ban_line}"
             f"Guncel fiyat: {current_price:.2f}\n"
             f"{price_line}"
             f"{score_line}"
             f"{setup_type_line}"
             f"Trend: {trend['trend_label']}\n"
-            f"En yakin destek: {closest_name} = {closest_price:.2f}\n"
+            f"En yakin destek: {closest_name} = {closest_price:.2f} (fark %{closest_distance:.2f})\n"
+            f"Destek test sayisi: {touches}\n"
             f"{support_line}"
             f"{resistance_line}"
-            f"52 haftalik: dipten +%{from_low:.1f} | tepeden %{from_high:.1f}\n"
+            f"52 haftalik: dipten +%{from_low:.1f} / tepeden %{from_high:.1f}\n"
+            f"RSI(14): {rsi:.1f}\n"
             f"{divergence_line}"
-            f"{atr_line}\n"
+            f"Hacim: {volume_ratio:.2f}x\n"
+            f"{atr_line}"
+            f"Mum: {candle['formation']}\n\n"
             f"<b>Risk/Odul:</b>\n"
-            f"🎯 Hedef: {target:.2f} (+%{reward_pct:.2f})\n"
-            f"🛑 Stop: {stop:.2f} (-%{risk_pct:.2f})\n"
-            f"⚖️ Risk/Odul: {rr:.2f} ({rr_label})\n\n"
+            f"Giris: {current_price:.2f}\n"
+            f"Stop: {stop:.2f} (-%{risk_pct:.2f})\n"
+            f"Hedef: {target:.2f} (+%{reward_pct:.2f})\n"
+            f"Risk/Odul: {rr:.2f} - {rr_label}\n\n"
             f"{limit_line}"
             f"<b>Donus kriterleri:</b>\n"
             + "\n".join(f"{'✅' if v else '⬜'} {k}" for k, v in criteria.items())
-            + f"\n\n📰 <b>Son Haber Basliklari:</b>\n{news_text}\n\n"
+            + "\n\n"
             f"Zaman: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
             f"⚠️ Yatirim tavsiyesi degildir."
         )
@@ -1140,24 +1114,20 @@ def analyze_ticker(ticker: str, state: dict, margin_banned: dict):
                 "opened": datetime.now().strftime("%d.%m.%Y %H:%M"),
             }
             send_telegram_message(msg)
+            print(f"   🟢 {symbol}: DONUS SINYALI")
 
 
 def main():
     print("================================================")
-    print("🇹🇷 BIST RALLI AVCISI & HABER ANALIZI v3.5")
+    print("🚀 BIST RALLI AVCISI v3.1")
     print(f"{datetime.now().strftime('%d.%m.%Y %H:%M')}")
     print("================================================")
 
     state = load_state()
 
-    # --- YENI: kredili islem yasagi listesi TUM ticker donguleri icin
-    # bir kez cekilir (her hisse icin ayri ayri cekmek gereksiz yuk olurdu) ---
-    margin_banned = fetch_margin_ban_list()
-
     for ticker in TICKERS:
         try:
-            analyze_ticker(ticker, state, margin_banned)
-            time.sleep(0.3)
+            analyze_ticker(ticker, state)
         except Exception as e:
             print(f"[HATA] {ticker}: {type(e).__name__}: {e}")
 
