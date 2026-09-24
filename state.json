@@ -49,9 +49,9 @@
   },
   "CIMSA.IS_rally_candidate": 1,
   "CIMSA.IS": {
-    "last_price": 43.040000915527344,
+    "last_price": 42.91999816894531,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "YIGIT.IS_rally_candidate": 2,
   "YIGIT.IS": {
@@ -61,9 +61,9 @@
   },
   "MIATK.IS_rally_candidate": 1,
   "MIATK.IS": {
-    "last_price": 23.940000534057617,
+    "last_price": 23.68000030517578,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "PETKM.IS_rally_candidate": 3,
   "PETKM.IS": {
@@ -73,9 +73,9 @@
   },
   "AEFES.IS_rally_candidate": 1,
   "AEFES.IS": {
-    "last_price": 18.799999237060547,
+    "last_price": 18.8799991607666,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "AGHOL.IS_rally_candidate": 3,
   "AGHOL.IS": {
@@ -91,9 +91,9 @@
   },
   "AKSEN.IS_rally_candidate": 1,
   "AKSEN.IS": {
-    "last_price": 71.6500015258789,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 71.19999694824219,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:08"
   },
   "ALARK.IS_rally_candidate": 4,
   "ALARK.IS": {
@@ -110,16 +110,16 @@
   "ANELE.IS_rally_candidate": 3,
   "ARCLK.IS_rally_candidate": 0,
   "ARCLK.IS": {
-    "last_price": 87.55000305175781,
+    "last_price": 87.30000305175781,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "ARDYZ.IS_rally_candidate": 1,
   "ASELS.IS_rally_candidate": 1,
   "ASELS.IS": {
-    "last_price": 374.25,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 371.0,
+    "last_score": 1,
+    "last_update": "24.09.2026 10:06"
   },
   "ASTOR.IS_rally_candidate": 1,
   "ASTOR.IS": {
@@ -140,11 +140,11 @@
     "last_score": 3,
     "last_update": "24.09.2026 08:07"
   },
-  "BASGZ.IS_rally_candidate": 1,
+  "BASGZ.IS_rally_candidate": 0,
   "BASGZ.IS": {
-    "last_price": 41.58000183105469,
-    "last_score": 4,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 41.2400016784668,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "BAYRK.IS_rally_candidate": 0,
   "BAYRK.IS": {
@@ -167,9 +167,9 @@
   },
   "BIOEN.IS_rally_candidate": 1,
   "BIOEN.IS": {
-    "last_price": 11.130000114440918,
+    "last_price": 10.859999656677246,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "BLCYT.IS_rally_candidate": 2,
   "BLCYT.IS": {
@@ -191,9 +191,9 @@
   },
   "BORSK.IS_rally_candidate": 0,
   "BORSK.IS": {
-    "last_price": 5.579999923706055,
+    "last_price": 5.570000171661377,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "BRISA.IS_rally_candidate": 1,
   "BRISA.IS": {
@@ -203,7 +203,7 @@
   },
   "BRLSM.IS_rally_candidate": 3,
   "BSOKE.IS_rally_candidate": 0,
-  "BTCIM.IS_rally_candidate": 1,
+  "BTCIM.IS_rally_candidate": 0,
   "BTCIM.IS": {
     "last_price": 2.369999885559082,
     "last_score": 4,
@@ -211,21 +211,21 @@
   },
   "BUCIM.IS_rally_candidate": 0,
   "BUCIM.IS": {
-    "last_price": 5.170000076293945,
+    "last_price": 5.139999866485596,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "CANTE.IS_rally_candidate": 0,
   "CANTE.IS": {
     "last_price": 1.149999976158142,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "CCOLA.IS_rally_candidate": 1,
   "CCOLA.IS": {
-    "last_price": 77.44999694824219,
+    "last_price": 77.19999694824219,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "CEMAS.IS_rally_candidate": 3,
   "CEMAS.IS": {
@@ -247,9 +247,9 @@
   },
   "CWENE.IS_rally_candidate": 0,
   "CWENE.IS": {
-    "last_price": 25.260000228881836,
+    "last_price": 24.959999084472656,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "DARDL.IS_rally_candidate": 0,
   "DARDL.IS": {
@@ -302,9 +302,9 @@
   },
   "EKGYO.IS_rally_candidate": 2,
   "EKGYO.IS": {
-    "last_price": 19.799999237060547,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 19.700000762939453,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:07"
   },
   "ENKAI.IS_rally_candidate": 3,
   "ENKAI.IS": {
@@ -314,9 +314,9 @@
   },
   "ENJSA.IS_rally_candidate": 1,
   "ENJSA.IS": {
-    "last_price": 109.0999984741211,
+    "last_price": 108.5999984741211,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "EREGL.IS_rally_candidate": 1,
   "EREGL.IS": {
@@ -374,9 +374,9 @@
   },
   "IZENR.IS_rally_candidate": 0,
   "IZENR.IS": {
-    "last_price": 4.230000019073486,
+    "last_price": 4.179999828338623,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "JANTS.IS_rally_candidate": 5,
   "JANTS.IS": {
@@ -400,9 +400,9 @@
   },
   "KONYA.IS_rally_candidate": 1,
   "KONYA.IS": {
-    "last_price": 3875.0,
+    "last_price": 3842.5,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "KRDMB.IS_rally_candidate": 0,
   "KRDMB.IS": {
@@ -418,9 +418,9 @@
   },
   "KRVGD.IS_rally_candidate": 2,
   "KRVGD.IS": {
-    "last_price": 2.200000047683716,
+    "last_price": 2.25,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "KTLEV.IS_rally_candidate": 1,
   "KTLEV.IS": {
@@ -466,15 +466,15 @@
   },
   "NETAS.IS_rally_candidate": 2,
   "NETAS.IS": {
-    "last_price": 81.0999984741211,
+    "last_price": 81.19999694824219,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "ODAS.IS_rally_candidate": 1,
   "ODAS.IS": {
-    "last_price": 6.960000038146973,
+    "last_price": 6.900000095367432,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "OTKAR.IS_rally_candidate": 1,
   "OTKAR.IS": {
@@ -484,9 +484,9 @@
   },
   "OYAKC.IS_rally_candidate": 1,
   "OYAKC.IS": {
-    "last_price": 21.440000534057617,
+    "last_price": 21.3799991607666,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "PARSN.IS_rally_candidate": 2,
   "PARSN.IS": {
@@ -553,9 +553,9 @@
   },
   "TMSN.IS_rally_candidate": 1,
   "TMSN.IS": {
-    "last_price": 66.05000305175781,
+    "last_price": 65.4000015258789,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "TRCAS.IS_rally_candidate": 4,
   "TRCAS.IS": {
@@ -565,9 +565,9 @@
   },
   "TRGYO.IS_rally_candidate": 0,
   "TRGYO.IS": {
-    "last_price": 92.55000305175781,
+    "last_price": 92.5999984741211,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "TTRAK.IS_rally_candidate": 2,
   "TTRAK.IS": {
@@ -575,11 +575,11 @@
     "last_score": 3,
     "last_update": "10.09.2026 10:07"
   },
-  "TUKAS.IS_rally_candidate": 6,
+  "TUKAS.IS_rally_candidate": 7,
   "TUKAS.IS": {
-    "last_price": 2.369999885559082,
+    "last_price": 2.359999895095825,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "TUPRS.IS_rally_candidate": 4,
   "VESBE.IS_rally_candidate": 3,
@@ -619,9 +619,9 @@
     "opened": "10.09.2026 09:09"
   },
   "ARDYZ.IS": {
-    "last_price": 67.8499984741211,
+    "last_price": 67.1500015258789,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "BSOKE.IS": {
     "last_price": 19.110000610351562,
@@ -630,34 +630,34 @@
   },
   "ULKER.IS_rally_candidate": 0,
   "ULKER.IS": {
-    "last_price": 89.1500015258789,
+    "last_price": 88.55000305175781,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "ASUZU.IS_rally_candidate": 0,
   "ASUZU.IS": {
-    "last_price": 44.5,
+    "last_price": 44.15999984741211,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "GOKNR.IS_rally_candidate": 0,
   "GOKNR.IS": {
-    "last_price": 15.739999771118164,
+    "last_price": 15.6899995803833,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "TTKOM.IS_rally_candidate": 1,
   "TTKOM.IS": {
-    "last_price": 54.150001525878906,
+    "last_price": 54.20000076293945,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
-  "KRPLS.IS_rally_candidate": 3,
+  "KRPLS.IS_rally_candidate": 2,
   "BALSU.IS_rally_candidate": 2,
   "BALSU.IS": {
-    "last_price": 7.050000190734863,
+    "last_price": 6.960000038146973,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "LILAK.IS_rally_candidate": 0,
   "LILAK.IS": {
@@ -667,21 +667,21 @@
   },
   "ZERGY.IS_rally_candidate": 0,
   "ZERGY.IS": {
-    "last_price": 7.650000095367432,
+    "last_price": 7.659999847412109,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "MERCN.IS_rally_candidate": 0,
   "MERCN.IS": {
-    "last_price": 14.819999694824219,
+    "last_price": 14.550000190734863,
     "last_score": 0,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "ENDAE.IS_rally_candidate": 1,
   "ENDAE.IS": {
-    "last_price": 15.0,
+    "last_price": 14.9399995803833,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "KRPLS.IS_confirmed_20 Gunluk Zirve": true,
   "ARENA.IS_rally_candidate": 0,
@@ -693,9 +693,9 @@
   "ATATP.IS_rally_candidate": 1,
   "AZTEK.IS_rally_candidate": 1,
   "AZTEK.IS": {
-    "last_price": 3.4100000858306885,
+    "last_price": 3.390000104904175,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "BINBN.IS_rally_candidate": 1,
   "BINBN.IS": {
@@ -717,9 +717,9 @@
   },
   "DOFRB.IS_rally_candidate": 0,
   "DOFRB.IS": {
-    "last_price": 84.69999694824219,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 82.9000015258789,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:06"
   },
   "EDATA.IS_rally_candidate": 0,
   "EDATA.IS": {
@@ -729,39 +729,39 @@
   },
   "ESCOM.IS_rally_candidate": 0,
   "ESCOM.IS": {
-    "last_price": 4.570000171661377,
+    "last_price": 4.519999980926514,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "FONET.IS_rally_candidate": 0,
   "FONET.IS": {
-    "last_price": 4.230000019073486,
+    "last_price": 4.170000076293945,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "FORTE.IS_rally_candidate": 0,
   "FORTE.IS": {
-    "last_price": 99.1500015258789,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 98.05000305175781,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "HTTBT.IS_rally_candidate": 0,
   "HTTBT.IS": {
     "last_price": 31.0,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "INGRM.IS_rally_candidate": 0,
   "INGRM.IS": {
-    "last_price": 321.75,
+    "last_price": 318.75,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "MOBTL.IS_rally_candidate": 0,
   "MOBTL.IS": {
-    "last_price": 10.109999656677246,
+    "last_price": 9.960000038146973,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "OBASE.IS_rally_candidate": 0,
   "OBASE.IS": {
@@ -782,17 +782,17 @@
     "last_score": 1,
     "last_update": "17.09.2026 07:09"
   },
-  "PATEK.IS_rally_candidate": 1,
+  "PATEK.IS_rally_candidate": 0,
   "PATEK.IS": {
-    "last_price": 15.770000457763672,
+    "last_price": 15.579999923706055,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "PKART.IS_rally_candidate": 0,
   "PKART.IS": {
-    "last_price": 90.55000305175781,
+    "last_price": 90.94999694824219,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "SDTTR.IS_rally_candidate": 0,
   "SDTTR.IS": {
@@ -806,17 +806,17 @@
     "last_score": 2,
     "last_update": "23.09.2026 11:06"
   },
-  "VBTYZ.IS_rally_candidate": 1,
+  "VBTYZ.IS_rally_candidate": 0,
   "VBTYZ.IS": {
-    "last_price": 28.65999984741211,
+    "last_price": 28.0,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
-  "ADGYO.IS_rally_candidate": 0,
+  "ADGYO.IS_rally_candidate": 2,
   "ADGYO.IS": {
-    "last_price": 55.54999923706055,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 57.54999923706055,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "AHSGY.IS_rally_candidate": 0,
   "AHSGY.IS": {
@@ -827,15 +827,15 @@
   "AKFGY.IS_confirmed_50 Gunluk Zirve": true,
   "AKFGY.IS_rally_candidate": 0,
   "AKFGY.IS": {
-    "last_price": 2.490000009536743,
+    "last_price": 2.4800000190734863,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "AKSGY.IS_rally_candidate": 0,
   "AKSGY.IS": {
-    "last_price": 9.350000381469727,
+    "last_price": 9.34000015258789,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "AKMGY.IS_rally_candidate": 0,
   "AKMGY.IS": {
@@ -851,9 +851,9 @@
   },
   "ASGYO.IS_rally_candidate": 0,
   "ASGYO.IS": {
-    "last_price": 10.239999771118164,
+    "last_price": 10.140000343322754,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ATAGY.IS_rally_candidate": 0,
   "ATAGY.IS": {
@@ -867,23 +867,23 @@
     "last_score": 3,
     "last_update": "24.09.2026 08:07"
   },
-  "AVGYO.IS_rally_candidate": 2,
+  "AVGYO.IS_rally_candidate": 1,
   "AVGYO.IS": {
-    "last_price": 15.930000305175781,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 15.619999885559082,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:07"
   },
   "AVPGY.IS_rally_candidate": 2,
   "AVPGY.IS": {
-    "last_price": 53.75,
-    "last_score": 3,
-    "last_update": "24.09.2026 09:07"
-  },
-  "BEGYO.IS_rally_candidate": 1,
-  "BEGYO.IS": {
-    "last_price": 2.9200000762939453,
+    "last_price": 53.20000076293945,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
+  },
+  "BEGYO.IS_rally_candidate": 0,
+  "BEGYO.IS": {
+    "last_price": 2.859999895095825,
+    "last_score": 1,
+    "last_update": "24.09.2026 10:07"
   },
   "DZGYO.IS_rally_candidate": 0,
   "DZGYO.IS": {
@@ -894,9 +894,9 @@
   "DGGYO.IS_rally_candidate": 0,
   "EGEGY.IS_rally_candidate": 0,
   "EGEGY.IS": {
-    "last_price": 16.299999237060547,
+    "last_price": 15.970000267028809,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "EYGYO.IS_rally_candidate": 0,
   "EYGYO.IS": {
@@ -912,24 +912,24 @@
   },
   "HLGYO.IS_rally_candidate": 0,
   "HLGYO.IS": {
-    "last_price": 4.139999866485596,
+    "last_price": 4.119999885559082,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "IDGYO.IS_rally_candidate": 0,
   "ISGYO.IS_rally_candidate": 2,
   "ISGYO.IS": {
     "last_price": 24.100000381469727,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "KZBGY.IS_rally_candidate": 0,
   "KZBGY.IS": {
     "last_price": 1.4700000286102295,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
-  "KLGYO.IS_rally_candidate": 1,
+  "KLGYO.IS_rally_candidate": 0,
   "KLGYO.IS": {
     "last_price": 3.990000009536743,
     "last_score": 4,
@@ -958,7 +958,7 @@
     "last_score": 3,
     "last_update": "23.09.2026 07:07"
   },
-  "MSGYO.IS_rally_candidate": 1,
+  "MSGYO.IS_rally_candidate": 0,
   "MSGYO.IS": {
     "last_price": 4.989999771118164,
     "last_score": 4,
@@ -972,9 +972,9 @@
   },
   "OZKGY.IS_rally_candidate": 0,
   "OZKGY.IS": {
-    "last_price": 12.239999771118164,
+    "last_price": 12.15999984741211,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "OZGYO.IS_rally_candidate": 0,
   "OZGYO.IS": {
@@ -990,9 +990,9 @@
   },
   "PSGYO.IS_rally_candidate": 1,
   "PSGYO.IS": {
-    "last_price": 1.899999976158142,
+    "last_price": 1.909999966621399,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "PEKGY.IS_rally_candidate": 0,
   "PEKGY.IS": {
@@ -1009,15 +1009,15 @@
   },
   "SRVGY.IS_rally_candidate": 1,
   "SRVGY.IS": {
-    "last_price": 2.200000047683716,
+    "last_price": 2.190000057220459,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "SNGYO.IS_rally_candidate": 1,
   "SNGYO.IS": {
-    "last_price": 2.8499999046325684,
+    "last_price": 2.819999933242798,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "SURGY.IS_rally_candidate": 1,
   "SURGY.IS": {
@@ -1027,9 +1027,9 @@
   },
   "SEGYO.IS_rally_candidate": 0,
   "SEGYO.IS": {
-    "last_price": 2.9700000286102295,
+    "last_price": 2.930000066757202,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "TDGYO.IS_rally_candidate": 0,
   "TDGYO.IS": {
@@ -1039,9 +1039,9 @@
   },
   "TSGYO.IS_rally_candidate": 0,
   "TSGYO.IS": {
-    "last_price": 5.179999828338623,
+    "last_price": 5.159999847412109,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "VKGYO.IS_rally_candidate": 0,
   "VKGYO.IS": {
@@ -1049,29 +1049,29 @@
     "last_score": 3,
     "last_update": "24.09.2026 08:07"
   },
-  "VRGYO.IS_rally_candidate": 0,
+  "VRGYO.IS_rally_candidate": 1,
   "VRGYO.IS": {
-    "last_price": 1.2000000476837158,
+    "last_price": 1.190000057220459,
     "last_score": 4,
-    "last_update": "24.09.2026 08:07"
+    "last_update": "24.09.2026 10:07"
   },
   "YGGYO.IS_rally_candidate": 0,
   "YGGYO.IS": {
-    "last_price": 213.1999969482422,
+    "last_price": 213.0,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ZGYO.IS_rally_candidate": 0,
   "ZGYO.IS": {
-    "last_price": 14.789999961853027,
+    "last_price": 15.25,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ZRGYO.IS_rally_candidate": 2,
   "ZRGYO.IS": {
-    "last_price": 18.989999771118164,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 19.0,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "AVOD.IS_rally_candidate": 0,
   "AVOD.IS": {
@@ -1095,21 +1095,21 @@
   "ATAKP.IS_rally_candidate": 0,
   "BESLR.IS_rally_candidate": 0,
   "BESLR.IS": {
-    "last_price": 11.819999694824219,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 11.75,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "CEMZY.IS_rally_candidate": 2,
   "CEMZY.IS": {
-    "last_price": 8.9399995803833,
+    "last_price": 8.960000038146973,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "DMRGD.IS_rally_candidate": 1,
   "DMRGD.IS": {
-    "last_price": 9.239999771118164,
+    "last_price": 9.300000190734863,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "DURKN.IS_rally_candidate": 0,
   "DURKN.IS": {
@@ -1121,13 +1121,13 @@
   "EFOR.IS": {
     "last_price": 12.84000015258789,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
-  "EKSUN.IS_rally_candidate": 1,
+  "EKSUN.IS_rally_candidate": 0,
   "EKSUN.IS": {
-    "last_price": 4.739999771118164,
-    "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 4.579999923706055,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:07"
   },
   "ELITE.IS_rally_candidate": 0,
   "ERSU.IS_rally_candidate": 0,
@@ -1157,15 +1157,15 @@
   },
   "KRSTL.IS_rally_candidate": 0,
   "KRSTL.IS": {
-    "last_price": 7.940000057220459,
+    "last_price": 7.880000114440918,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
-  "KTSKR.IS_rally_candidate": 1,
+  "KTSKR.IS_rally_candidate": 0,
   "KTSKR.IS": {
-    "last_price": 62.25,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 61.150001525878906,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "MERKO.IS_rally_candidate": 0,
   "MERKO.IS": {
@@ -1175,21 +1175,21 @@
   },
   "MEYSU.IS_rally_candidate": 0,
   "MEYSU.IS": {
-    "last_price": 8.649999618530273,
+    "last_price": 8.59000015258789,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "OBAMS.IS_rally_candidate": 0,
   "OBAMS.IS": {
-    "last_price": 4.480000019073486,
+    "last_price": 4.420000076293945,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "OFSYM.IS_rally_candidate": 1,
   "OFSYM.IS": {
-    "last_price": 58.29999923706055,
+    "last_price": 58.400001525878906,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ORCAY.IS_rally_candidate": 0,
   "ORCAY.IS": {
@@ -1206,21 +1206,21 @@
   },
   "PETUN.IS_rally_candidate": 0,
   "PETUN.IS": {
-    "last_price": 10.960000038146973,
+    "last_price": 10.770000457763672,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "PINSU.IS_rally_candidate": 1,
   "PINSU.IS": {
-    "last_price": 9.470000267028809,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 9.4399995803833,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "PNSUT.IS_rally_candidate": 1,
   "PNSUT.IS": {
-    "last_price": 11.15999984741211,
+    "last_price": 11.050000190734863,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "SEGMN.IS_rally_candidate": 0,
   "SEGMN.IS": {
@@ -1234,29 +1234,29 @@
     "last_score": 3,
     "last_update": "24.09.2026 08:07"
   },
-  "SOKE.IS_rally_candidate": 1,
+  "SOKE.IS_rally_candidate": 0,
   "SOKE.IS": {
-    "last_price": 8.130000114440918,
-    "last_score": 4,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 8.079999923706055,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "TATGD.IS_rally_candidate": 0,
   "TATGD.IS": {
-    "last_price": 16.799999237060547,
+    "last_price": 16.770000457763672,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
-  "TBORG.IS_rally_candidate": 2,
+  "TBORG.IS_rally_candidate": 1,
   "TBORG.IS": {
-    "last_price": 129.0,
-    "last_score": 4,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 128.60000610351562,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:07"
   },
   "ULUUN.IS_rally_candidate": 0,
   "ULUUN.IS": {
-    "last_price": 7.139999866485596,
+    "last_price": 7.119999885559082,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "VANGD.IS_rally_candidate": 0,
   "VANGD.IS": {
@@ -1266,24 +1266,24 @@
   },
   "YYLGD.IS_rally_candidate": 0,
   "YYLGD.IS": {
-    "last_price": 8.850000381469727,
+    "last_price": 8.760000228881836,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "AFYON.IS_rally_candidate": 1,
   "AFYON.IS": {
-    "last_price": 11.289999961853027,
+    "last_price": 11.260000228881836,
     "last_score": 4,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
-  "AKCNS.IS_rally_candidate": 1,
+  "AKCNS.IS_rally_candidate": 2,
   "BIENY.IS_rally_candidate": 0,
   "BIENY.IS": {
     "last_price": 16.5,
     "last_score": 3,
     "last_update": "24.09.2026 09:07"
   },
-  "BOBET.IS_rally_candidate": 1,
+  "BOBET.IS_rally_candidate": 0,
   "CGCAM.IS_rally_candidate": 0,
   "CGCAM.IS": {
     "last_price": 23.5,
@@ -1292,9 +1292,9 @@
   },
   "CMBTN.IS_rally_candidate": 0,
   "CMBTN.IS": {
-    "last_price": 1428.0,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 1420.0,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:07"
   },
   "DOGUB.IS_rally_candidate": 0,
   "DOGUB.IS": {
@@ -1304,39 +1304,39 @@
   },
   "EGSER.IS_rally_candidate": 0,
   "EGSER.IS": {
-    "last_price": 2.700000047683716,
+    "last_price": 2.7100000381469727,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "GOLTS.IS_rally_candidate": 0,
   "GOLTS.IS": {
-    "last_price": 262.5,
+    "last_price": 260.5,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "KLKIM.IS_rally_candidate": 0,
   "KLKIM.IS": {
-    "last_price": 23.479999542236328,
+    "last_price": 23.420000076293945,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
-  "KLSER.IS_rally_candidate": 1,
+  "KLSER.IS_rally_candidate": 0,
   "KLSER.IS": {
     "last_price": 20.040000915527344,
     "last_score": 4,
     "last_update": "24.09.2026 09:07"
   },
-  "KUTPO.IS_rally_candidate": 1,
+  "KUTPO.IS_rally_candidate": 0,
   "KUTPO.IS": {
     "last_price": 72.19999694824219,
     "last_score": 3,
     "last_update": "24.09.2026 07:08"
   },
-  "LMKDC.IS_rally_candidate": 2,
+  "LMKDC.IS_rally_candidate": 1,
   "LMKDC.IS": {
-    "last_price": 22.68000030517578,
+    "last_price": 22.559999465942383,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "NIBAS.IS_rally_candidate": 0,
   "NIBAS.IS": {
@@ -1344,17 +1344,17 @@
     "last_score": 3,
     "last_update": "24.09.2026 08:08"
   },
-  "NUHCM.IS_rally_candidate": 1,
+  "NUHCM.IS_rally_candidate": 0,
   "NUHCM.IS": {
-    "last_price": 209.3000030517578,
+    "last_price": 204.6999969482422,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "SERNT.IS_rally_candidate": 1,
   "SERNT.IS": {
-    "last_price": 5.880000114440918,
+    "last_price": 5.820000171661377,
     "last_score": 4,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "MARBL.IS_rally_candidate": 0,
   "MARBL.IS": {
@@ -1368,17 +1368,17 @@
     "last_score": 4,
     "last_update": "22.09.2026 11:07"
   },
-  "AYCES.IS_rally_candidate": 1,
+  "AYCES.IS_rally_candidate": 0,
   "AYCES.IS": {
-    "last_price": 405.5,
-    "last_score": 3,
-    "last_update": "24.09.2026 09:07"
-  },
-  "AVTUR.IS_rally_candidate": 1,
-  "AVTUR.IS": {
-    "last_price": 10.800000190734863,
+    "last_price": 402.5,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
+  },
+  "AVTUR.IS_rally_candidate": 0,
+  "AVTUR.IS": {
+    "last_price": 10.600000381469727,
+    "last_score": 1,
+    "last_update": "24.09.2026 10:08"
   },
   "BYDNR.IS_rally_candidate": 0,
   "BYDNR.IS": {
@@ -1394,27 +1394,27 @@
   },
   "DOCO.IS_rally_candidate": 0,
   "DOCO.IS": {
-    "last_price": 10657.5,
-    "last_score": 2,
-    "last_update": "24.09.2026 07:08"
+    "last_price": 10440.0,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:08"
   },
   "ETILR.IS_rally_candidate": 5,
   "ETILR.IS": {
-    "last_price": 6.369999885559082,
+    "last_price": 6.360000133514404,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "MAALT.IS_rally_candidate": 0,
   "MAALT.IS": {
-    "last_price": 939.5,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 932.5,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:08"
   },
   "MARTI.IS_rally_candidate": 1,
   "MARTI.IS": {
     "last_price": 1.4700000286102295,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "MERIT.IS_rally_candidate": 0,
   "MERIT.IS": {
@@ -1430,11 +1430,11 @@
   },
   "TABGD.IS_rally_candidate": 0,
   "TABGD.IS": {
-    "last_price": 222.1999969482422,
+    "last_price": 222.0,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
-  "TEKTU.IS_rally_candidate": 1,
+  "TEKTU.IS_rally_candidate": 0,
   "TEKTU.IS": {
     "last_price": 5.230000019073486,
     "last_score": 4,
@@ -1446,7 +1446,7 @@
     "last_score": 3,
     "last_update": "23.09.2026 13:09"
   },
-  "AHGAZ.IS_rally_candidate": 5,
+  "AHGAZ.IS_rally_candidate": 4,
   "AHGAZ.IS": {
     "last_price": 41.65999984741211,
     "last_score": 3,
@@ -1465,11 +1465,11 @@
     "last_score": 2,
     "last_update": "24.09.2026 09:07"
   },
-  "ALFAS.IS_rally_candidate": 1,
+  "ALFAS.IS_rally_candidate": 0,
   "ALFAS.IS": {
-    "last_price": 33.84000015258789,
+    "last_price": 33.5,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "ARFYE.IS_rally_candidate": 0,
   "ARFYE.IS": {
@@ -1479,9 +1479,9 @@
   },
   "AYDEM.IS_rally_candidate": 0,
   "AYDEM.IS": {
-    "last_price": 23.979999542236328,
+    "last_price": 23.639999389648438,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "AYEN.IS_rally_candidate": 0,
   "AYEN.IS": {
@@ -1530,15 +1530,15 @@
   },
   "MOGAN.IS_rally_candidate": 0,
   "MOGAN.IS": {
-    "last_price": 8.9399995803833,
+    "last_price": 8.90999984741211,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
-  "NTGAZ.IS_rally_candidate": 1,
+  "NTGAZ.IS_rally_candidate": 0,
   "NTGAZ.IS": {
-    "last_price": 10.710000038146973,
+    "last_price": 10.59000015258789,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "NATEN.IS_rally_candidate": 0,
   "NATEN.IS": {
@@ -1561,9 +1561,9 @@
   },
   "CVKMD.IS_rally_candidate": 1,
   "CVKMD.IS": {
-    "last_price": 13.399999618530273,
+    "last_price": 13.380000114440918,
     "last_score": 4,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "PRKME.IS_rally_candidate": 0,
   "PRKME.IS": {
@@ -1579,21 +1579,21 @@
   },
   "TRMET.IS_rally_candidate": 2,
   "TRMET.IS": {
-    "last_price": 137.3000030517578,
+    "last_price": 135.8000030517578,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
-  "TRENJ.IS_rally_candidate": 2,
+  "TRENJ.IS_rally_candidate": 1,
   "TRENJ.IS": {
-    "last_price": 102.5,
+    "last_price": 101.4000015258789,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:08"
   },
   "TRALT.IS_rally_candidate": 1,
   "TRALT.IS": {
-    "last_price": 49.31999969482422,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 48.619998931884766,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:08"
   },
   "VSNMD.IS_rally_candidate": 0,
   "VSNMD.IS": {
@@ -1632,14 +1632,14 @@
   "DZGYO.IS_confirmed_20 Gunluk Zirve": true,
   "EKGYO.IS_confirmed_50 Gunluk Zirve": true,
   "ATAKP.IS": {
-    "last_price": 36.099998474121094,
+    "last_price": 36.20000076293945,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ELITE.IS": {
-    "last_price": 21.139999389648438,
+    "last_price": 21.020000457763672,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ERSU.IS": {
     "last_price": 14.390000343322754,
@@ -1655,15 +1655,15 @@
   "RUZYE.IS_confirmed_20 Gunluk Zirve": true,
   "AKFGY.IS_confirmed_20 Gunluk Zirve": true,
   "ATATP.IS": {
-    "last_price": 247.10000610351562,
-    "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 242.3000030517578,
+    "last_score": 3,
+    "last_update": "24.09.2026 10:06"
   },
   "TTKOM.IS_confirmed_20 Gunluk Zirve": true,
   "RYGYO.IS": {
-    "last_price": 50.150001525878906,
+    "last_price": 49.5,
     "last_score": 3,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "ZRGYO.IS_confirmed_20 Gunluk Zirve": true,
   "PATEK.IS_confirmed_20 Gunluk Zirve": true,
@@ -1678,19 +1678,19 @@
   "MRGYO.IS_confirmed_100 Gunluk Zirve": true,
   "ALKLC.IS_confirmed_20 Gunluk Zirve": true,
   "KRPLS.IS": {
-    "last_price": 12.270000457763672,
+    "last_price": 11.979999542236328,
     "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:06"
   },
   "AKCNS.IS": {
-    "last_price": 225.89999389648438,
+    "last_price": 224.89999389648438,
     "last_score": 2,
-    "last_update": "24.09.2026 09:07"
+    "last_update": "24.09.2026 10:07"
   },
   "KRGYO.IS": {
-    "last_price": 3.140000104904175,
-    "last_score": 1,
-    "last_update": "24.09.2026 09:07"
+    "last_price": 3.1700000762939453,
+    "last_score": 2,
+    "last_update": "24.09.2026 10:07"
   },
   "PAMEL.IS": {
     "last_price": 53.20000076293945,
